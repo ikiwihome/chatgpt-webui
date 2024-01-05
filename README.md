@@ -133,13 +133,10 @@ pnpm dev
 #### Docker build & Run
 
 ```bash
-docker build -t chatgpt-web .
-
-# 前台运行
-docker run --name chatgpt-web --rm -it -p 127.0.0.1:3002:3002 --env OPENAI_API_KEY=your_api_key chatgpt-web
+docker build -t chatgpt-webui .
 
 # 后台运行
-docker run --name chatgpt-web -d -p 127.0.0.1:3002:3002 --env OPENAI_API_KEY=your_api_key chatgpt-web
+docker run -d --name chatgpt-webui -h chatgpt-webui --restart=unless-stopped -e TZ="Asia/Shanghai" -e OPENAI_API_KEY="sk-xxxxx" -e TIMEOUT_MS=300000  -p 3002:3002 chatgpt-webui
 
 # 运行地址
 http://localhost:3002/
@@ -152,7 +149,7 @@ version: '3'
 
 services:
   app:
-    image: chenzhaoyu94/chatgpt-web # 总是使用 latest ,更新时重新 pull 该 tag 镜像即可
+    image: ikiwicc/chatgpt-webui # 总是使用 latest ,更新时重新 pull 该 tag 镜像即可
     ports:
       - 127.0.0.1:3002:3002
     environment:
@@ -163,7 +160,7 @@ services:
       # API接口地址，可选，设置 OPENAI_API_KEY 时可用
       OPENAI_API_BASE_URL: xxx
       # API模型，可选，设置 OPENAI_API_KEY 时可用，https://platform.openai.com/docs/models
-      # gpt-4, gpt-4-0314, gpt-4-0613, gpt-4-32k, gpt-4-32k-0314, gpt-4-32k-0613, gpt-3.5-turbo-16k, gpt-3.5-turbo-16k-0613, gpt-3.5-turbo, gpt-3.5-turbo-0301, gpt-3.5-turbo-0613, text-davinci-003, text-davinci-002, code-davinci-002
+      # gpt-4, gpt-4-1106-preview, gpt-4-0314, gpt-4-0613, gpt-4-32k, gpt-4-32k-0314, gpt-4-32k-0613, gpt-3.5-turbo-16k, gpt-3.5-turbo-16k-0613, gpt-3.5-turbo, gpt-3.5-turbo-0301, gpt-3.5-turbo-0613, text-davinci-003, text-davinci-002, code-davinci-002
       OPENAI_API_MODEL: xxx
       # 反向代理，可选
       API_REVERSE_PROXY: xxx

@@ -1,17 +1,14 @@
 {
-  "name": "chatgpt-web-service",
-  "version": "1.0.0",
+  "name": "chatgpt-webui-service",
+  "version": "2.0.0-20240106",
   "private": false,
-  "description": "ChatGPT Web Service",
+  "description": "ChatGPT Web UI 后端服务",
   "author": "ikiwi <ikiwicc@gmail.com>",
   "keywords": [
-    "chatgpt-web",
-    "chatgpt",
-    "chatbot",
-    "express"
+    "chatgpt-webui"
   ],
   "engines": {
-    "node": "^16 || ^18 || ^19"
+    "node": "^16 || ^18 || ^19 || ^20"
   },
   "scripts": {
     "start": "esno ./src/index.ts",
