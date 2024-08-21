@@ -16,8 +16,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "bootstrap": "pnpm install && pnpm run common:prepare",
-    "common:cleanup": "rimraf node_modules && rimraf pnpm-lock.yaml",
-    "common:prepare": "husky install"
+    "common:cleanup": "rimraf node_modules && rimraf pnpm-lock.yaml"
   },
   "dependencies": {
     "@vscode/markdown-it-katex": "^1.1.0",
@@ -48,7 +47,6 @@
     "axios": "^1.7.4",
     "crypto-js": "^4.2.0",
     "eslint": "^9.9.0",
-    "husky": "^9.1.5",
     "less": "^4.2.0",
     "lint-staged": "^15.2.9",
     "markdown-it-link-attributes": "^4.0.1",
