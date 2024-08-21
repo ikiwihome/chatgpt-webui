@@ -27,7 +27,7 @@ const timeoutMs: number = !isNaN(+process.env.TIMEOUT_MS) ? +process.env.TIMEOUT
 const disableDebug: boolean = process.env.OPENAI_API_DISABLE_DEBUG === 'true'
 
 let apiModel: ApiModel
-const model = isNotEmptyString(process.env.OPENAI_API_MODEL) ? process.env.OPENAI_API_MODEL : 'gpt-3.5-turbo'
+const model = isNotEmptyString(process.env.OPENAI_API_MODEL) ? process.env.OPENAI_API_MODEL : 'gpt-4o'
 
 if (!isNotEmptyString(process.env.OPENAI_API_KEY) && !isNotEmptyString(process.env.OPENAI_ACCESS_TOKEN))
   throw new Error('Missing OPENAI_API_KEY or OPENAI_ACCESS_TOKEN environment variable')
@@ -53,8 +53,12 @@ let api: ChatGPTAPI | ChatGPTUnofficialProxyAPI
         options.maxModelTokens = 32768
         options.maxResponseTokens = 8192
       }
-      // if use GPT-4 Turbo
-      else if (model.toLowerCase().includes('1106-preview')) {
+      else if (/-4o-mini/.test(model.toLowerCase())) {
+        options.maxModelTokens = 128000
+        options.maxResponseTokens = 16384
+      }
+      // if use GPT-4 Turbo or GPT-4o
+      else if (/-preview|-turbo|o/.test(model.toLowerCase())) {
         options.maxModelTokens = 128000
         options.maxResponseTokens = 4096
       }
@@ -64,14 +68,19 @@ let api: ChatGPTAPI | ChatGPTUnofficialProxyAPI
       }
     }
     else if (model.toLowerCase().includes('gpt-3.5')) {
-      if (model.toLowerCase().includes('16k')) {
+      if (/16k|1106|0125/.test(model.toLowerCase())) {
         options.maxModelTokens = 16384
         options.maxResponseTokens = 4096
       }
     }
 
-    if (isNotEmptyString(OPENAI_API_BASE_URL))
-      options.apiBaseUrl = `${OPENAI_API_BASE_URL}/v1`
+    if (isNotEmptyString(OPENAI_API_BASE_URL)) {
+      // if find /v1 in OPENAI_API_BASE_URL then use it
+      if (OPENAI_API_BASE_URL.includes('/v1'))
+        options.apiBaseUrl = `${OPENAI_API_BASE_URL}`
+      else
+        options.apiBaseUrl = `${OPENAI_API_BASE_URL}/v1`
+    }
 
     setupProxy(options)
 
@@ -138,7 +147,7 @@ async function fetchUsage() {
 
   const API_BASE_URL = isNotEmptyString(OPENAI_API_BASE_URL)
     ? OPENAI_API_BASE_URL
-    : 'https://openai-2zn.pages.dev/api'
+    : 'https://api.gptsapi.net'
 
   const [startDate, endDate] = formatDate()
 

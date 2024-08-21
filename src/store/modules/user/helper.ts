@@ -15,7 +15,7 @@ export interface UserState {
 export function defaultSetting(): UserState {
   return {
     userInfo: {
-      avatar: 'https://i.postimg.cc/YSYB8pBW/avatar.jpg',
+      avatar: 'https://img.picui.cn/free/2024/08/21/66c60aa494d24.jpg',
       name: 'ikiwi',
       description: 'View on <a href="https://ikiwi.cc" class="text-blue-500" target="_blank" >ikiwi.cc</a>',
     },

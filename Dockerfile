@@ -69,11 +69,11 @@ COPY --from=frontend /app/dist /app/public
 
 COPY --from=backend /app/build /app/build
 
-ENV OPENAI_API_BASE_URL="https://openai-2zn.pages.dev/api"
+ENV OPENAI_API_BASE_URL="https://api.gptsapi.net"
 
 ENV TIMEOUT_MS=300000
 
-ENV OPENAI_API_MODEL=gpt-3.5-turbo
+ENV OPENAI_API_MODEL=gpt-4o
 
 EXPOSE 3002
 
